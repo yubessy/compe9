@@ -55,8 +55,7 @@ def numericalize(feature_dict):
         elif k == 'stadium':
             res['stadium#{}'.format(v)] = 1
         elif k == 'tv':
-            for x in v.split('／'):
-                res['tv#{}'.format(x)] = 1
+            res.update({'tv#{}'.format(tv): 1 for tv in v.split('／')})
         elif k == 'address':
             res['pref#{}'.format(v[:2])] = 1  # 住所は都道府県のみ用いる
         elif k == 'capacity':
