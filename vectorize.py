@@ -33,7 +33,7 @@ def numericalize(feature_dict):
         elif k == 'year':
             res['year#{}'.format(v)] = 1
         elif k == 'league':
-            res['league#j1'] = 1 if v == 'Ｊ１' else 0
+            res['league#j1'] = 1 if v == 'Ｊ１' else -1
         elif k == 'season':
             m = SEASON_V.match(v)
             res['season#{}'.format(m.group(1))] = 1
@@ -42,7 +42,7 @@ def numericalize(feature_dict):
             m = DATE_V.match(v)
             res['month#{}'.format(m.group(1))] = 1
             res['weekday#{}'.format(m.group(3))] = 1
-            res['holiday#'] = 1 if m.group(4) or m.group(3) in '土日' else 0
+            res['holiday#'] = 1 if m.group(4) or m.group(3) in '土日' else -1
         elif k == 'time':
             m = TIME_V.match(v)
             res['hour#{}'.format(m.group(1))] = 1
