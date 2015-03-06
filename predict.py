@@ -8,8 +8,9 @@ import sys
 
 from numpy import sqrt
 from sklearn.cross_validation import cross_val_score
-from sklearn.feature_extraction import DictVectorizer
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.feature_extraction import DictVectorizer
+from sklearn.linear_model import Lasso
 
 
 DATA_DIR = 'data/'
@@ -23,7 +24,7 @@ def load_dataset(labeled_train_vecs, labeled_test_vecs, filter_features=set()):
         labeled_train_vecs = [
             {k: v for k, v in d.items() if k.split('#')[0] in filter_features}
             for d in labeled_train_vecs]
-        labeled_train_vecs = [
+        labeled_test_vecs = [
             {k: v for k, v in d.items() if k.split('#')[0] in filter_features}
             for d in labeled_test_vecs]
     else:
@@ -50,10 +51,35 @@ def main(mode):
     with open(LABELED_TEST_VEC_JSON) as labeled_test_vec_file:
         labeled_test_vecs = json.loads(labeled_test_vec_file.read())
 
+    filter_features = {
+        #'year',
+        'league',
+        'season',
+        #'day',
+        #'month',
+        'weekday',
+        'holiday',
+        #'hour',
+        #'team',
+        #'home',
+        'away',
+        'stadium',
+        #'tv',
+        #'address',
+        'capacity',
+        #'home_score',
+        #'away_score',
+        #'weather',
+        #'humidity',
+        #'judge',
+        #'player',
+    }
     train_i, test_i, train_x, test_x, train_y = load_dataset(
-        labeled_train_vecs, labeled_test_vecs)
+        labeled_train_vecs, labeled_test_vecs, filter_features)
 
-    reg = RandomForestRegressor()
+    reg = RandomForestRegressor(
+        n_estimators=50,
+        max_depth=20)
 
     if mode == '-o':
         reg.fit(train_x.toarray(), train_y)

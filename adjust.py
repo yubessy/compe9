@@ -6,7 +6,7 @@ This script is for adjustment.
 import json
 
 DATA_DIR = 'data/'
-PREDICT_CSV = DATA_DIR + 'predict.csv'
+PREDICT_CSV = DATA_DIR + 'predict_ne50md20lf.csv'
 JOINED_TRAIN_JSON = DATA_DIR + 'joined_train.json'
 JOINED_TEST_JSON = DATA_DIR + 'joined_test.json'
 
@@ -49,10 +49,8 @@ def main():
             min_by_home_team[d['home_team']]
             + min_by_away_team[d['away_team']]) / 2
         if v > ma:
-            print('hoge')
             v = ma
         elif v < mi:
-            print('hoge')
             v = mi
         print("{},{}".format(i, v))
 
