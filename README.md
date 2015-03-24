@@ -56,8 +56,10 @@ script: `adjust.py`
 ## モデル再現手順
 
 ```
-$ cd compe9`
-$ source ./env/bin/activate
+$ python --version
+Python 3.4.0
+$ cd compe9
+$ pip install -r requirements.txt
 $ python ./join.py
 $ python ./vectorize.py
 $ python ./adjust.py
