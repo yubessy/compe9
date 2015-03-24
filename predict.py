@@ -16,6 +16,7 @@ from sklearn.linear_model import Lasso
 DATA_DIR = 'data/'
 LABELED_TRAIN_VEC_JSON = DATA_DIR + 'labeled_train_vec.json'
 LABELED_TEST_VEC_JSON = DATA_DIR + 'labeled_test_vec.json'
+RESULT_CSV = DATA_DIR + 'result.csv'
 
 
 def load_dataset(labeled_train_vecs, labeled_test_vecs, filter_features=set()):
@@ -84,8 +85,9 @@ def main(mode):
     if mode == '-o':
         reg.fit(train_x.toarray(), train_y)
         test_y = reg.predict(test_x.toarray())
-        for i, y in zip(test_i, test_y):
-            print('{},{}'.format(i, int(y)))
+        with open(RESULT_CSV, 'w') as result_file:
+            for i, y in zip(test_i, test_y):
+                result_file.write('{},{}\n'.format(i, int(y)))
 
     elif mode == '-c':
         mses = cross_val_score(
